@@ -77,7 +77,7 @@ def main():
         line = file.readline()
         i = 1
         while line != "":
-            s = regex(line, i).split(",")
+            s = regex(line, i).replace("\n", "").split(",")
             row_list.append(s)
             i = i + 1
             line = file.readline()
