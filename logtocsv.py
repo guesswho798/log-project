@@ -5,7 +5,7 @@ import os, sys
 def regex(s, index):
 
     # starting from one
-    index = str(index + 1)
+    index = str(index)
 
     # separating two different line types
     if s.find("GR3D_FREQ") == -1:
@@ -72,15 +72,18 @@ def main():
     # opening log file
     if os.path.exists("tegrastats.log"):
         file = open("tegrastats.log", "r")
-        lines = file.readlines()
+
+        # adding info from txt file to list
+        line = file.readline()
+        i = 1
+        while line != "":
+            s = regex(line, i).split(",")
+            row_list.append(s)
+            i = i + 1
+            line = file.readline()
     else:
         print("log file not found")
         sys.exit()
-
-    # adding info from txt file to list
-    for i in range(len(lines)):
-        s = regex(lines[i], i).split(",")
-        row_list.append(s)
 
     # inserting list into csv file
     with open("test.csv", "w", newline="") as file:
