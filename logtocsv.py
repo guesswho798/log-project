@@ -1,5 +1,6 @@
 import csv
 import re
+import datetime
 import os, sys
 
 def regex(s, index):
@@ -16,9 +17,13 @@ def regex(s, index):
         # calculating ram usage percentage
         ram_percentage = str(int(100 * (int(re.sub(reg, r"\1", s)) / int(re.sub(reg, r"\2", s)))))
 
+        # getting time and date
+        epoch = str(datetime.datetime.now())
+
         return re.sub(
             reg,
-            index
+            index + ","
+            + epoch
             + r",\1,\2,"
             + ram_percentage
             + r",\3,\5,\7,\9,\11,\13,\4,\6,\8,\10,\12,\14,,,\15,\16,\17",
@@ -31,9 +36,13 @@ def regex(s, index):
     # calculating ram usage percentage
     ram_percentage = str(int(100 * (int(re.sub(reg, r"\1", s)) / int(re.sub(reg, r"\2", s)))))
 
+    # getting time and date
+    epoch = str(datetime.datetime.now())
+
     return re.sub(
         reg,
-        index
+        index + ","
+        + epoch
         + r",\1,\2,"
         + ram_percentage
         + r",\3,\5,\7,\9,\11,\13,\4,\6,\8,\10,\12,\14,\15,\16,\17,\18,\19",
@@ -47,6 +56,7 @@ def main():
     row_list = list()
     first_row = [
         "index",
+        "timestamp",
         "RAM usage",
         "RAM amount",
         "RAM usage percentage",
